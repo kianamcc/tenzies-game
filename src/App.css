@@ -44,9 +44,10 @@ h1, h2, h3 {
   letter-spacing: -0.03em;
 }
 
-.die-container {
+.dice-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
+  grid-template: auto auto / repeat(5, 1fr); /* 2 auto determined rows in height, 5 columns each 1fr wide */
   gap: 20px;
   margin: 0;
   padding: 0;

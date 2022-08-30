@@ -5,7 +5,17 @@ import Die from "./components/Die";
 
 function App() {
   const randomNum = () => {
-    return Math.floor(Math.random() * 6) + 1;
+    const randomNumArr = [];
+    for (let i = 0; i < 10; i++) {
+      randomNumArr.push(Math.floor(Math.random() * 6) + 1);
+    }
+    return randomNumArr;
+  };
+
+  const [numArr, setNumArr] = useState(randomNum());
+
+  const generateDice = () => {
+    return numArr.map((item) => <Die value={item} />);
   };
 
   return (
@@ -16,18 +26,7 @@ function App() {
           Roll until all dice are the same. Click each die to freeze it at its
           current value between rolls.
         </p>
-        <div className="die-container">
-          <Die value={randomNum()} />
-          <Die value={randomNum()} />
-          <Die value={randomNum()} />
-          <Die value={randomNum()} />
-          <Die value={randomNum()} />
-          <Die value={randomNum()} />
-          <Die value={randomNum()} />
-          <Die value={randomNum()} />
-          <Die value={randomNum()} />
-          <Die value={randomNum()} />
-        </div>
+        <div className="dice-container">{generateDice()}</div>
       </div>
     </main>
   );

@@ -5,7 +5,7 @@ const Die = (props) => {
   return (
     <div className="die">
       <div className="die-item">
-        <h2>{props.value}</h2>
+        <h2 className="die-num">{props.value}</h2>
       </div>
     </div>
   );

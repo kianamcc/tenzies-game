@@ -2,6 +2,7 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Die from "./components/Die";
+import { nanoid } from "nanoid";
 
 function App() {
   const getRandomNumbers = () => {
@@ -10,6 +11,7 @@ function App() {
       randomNumArr.push({
         value: Math.floor(Math.random() * 6) + 1,
         isHeld: false,
+        id: nanoid(),
       });
     }
     return randomNumArr;
@@ -18,8 +20,8 @@ function App() {
   const [numArr, setNumArr] = useState(getRandomNumbers());
   console.log(numArr);
 
-  const diceElements = numArr.map((item, index) => (
-    <Die value={item.value} key={index} />
+  const diceElements = numArr.map((die) => (
+    <Die value={die.value} key={die.id} />
   ));
 
   const handleRollBtnClick = () => {

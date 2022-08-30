@@ -7,15 +7,19 @@ function App() {
   const getRandomNumbers = () => {
     const randomNumArr = [];
     for (let i = 0; i < 10; i++) {
-      randomNumArr.push(Math.floor(Math.random() * 6) + 1);
+      randomNumArr.push({
+        value: Math.floor(Math.random() * 6) + 1,
+        isHeld: false,
+      });
     }
     return randomNumArr;
   };
 
   const [numArr, setNumArr] = useState(getRandomNumbers());
+  console.log(numArr);
 
   const diceElements = numArr.map((item, index) => (
-    <Die value={item} key={index} />
+    <Die value={item.value} key={index} />
   ));
 
   const handleRollBtnClick = () => {

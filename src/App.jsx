@@ -20,8 +20,24 @@ function App() {
   const [numArr, setNumArr] = useState(getRandomNumbers());
   console.log(numArr);
 
+  const holdDie = (id) => {
+    console.log(id);
+    setNumArr((prevArr) => {
+      return prevArr.map((die) => {
+        return die.id === id ? { ...die, isHeld: !die.isHeld } : die;
+      });
+    });
+  };
+
   const diceElements = numArr.map((die) => (
-    <Die value={die.value} key={die.id} />
+    <Die
+      value={die.value}
+      isHeld={die.isHeld}
+      key={die.id}
+      holdDie={() =>
+        holdDie(die.id)
+      } /* pass function and die id at the same time */
+    />
   ));
 
   const handleRollBtnClick = () => {

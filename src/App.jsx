@@ -41,7 +41,19 @@ function App() {
   ));
 
   const handleRollBtnClick = () => {
-    setNumArr(getRandomNumbers);
+    setNumArr((prevArr) => {
+      return prevArr.map((die) => {
+        // if held is true leave as is
+        return die.isHeld
+          ? die
+          : {
+              ...die,
+              id: nanoid(),
+              isHeld: false,
+              value: Math.floor(Math.random() * 6) + 1,
+            };
+      });
+    });
   };
 
   return (

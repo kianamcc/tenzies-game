@@ -7,7 +7,7 @@ import Confetti from "react-confetti";
 
 /*Other Feature Ideas
 - Track number of rolls it took to win (COMPLETED)
-- Track time it took to win
+- Track time it took to win (COMPLETED)
 - Save best time to localStorage
 */
 
@@ -39,14 +39,9 @@ function App() {
   const [dice, setDice] = useState(getRandomNumbers());
   const [tenzies, setTenzies] = useState(false); // represents whether the user won the game or not
   const [rollCount, setRollCount] = useState(0);
-  const [timeRecord, setTimeRecord] = useState(0); // save time to local storage
-  const [timer, setTimer] = useState(0);
+  const [seconds, setSeconds] = useState(0);
   const [minute, setMinute] = useState(0);
   const [timerOn, setTimerOn] = useState(true);
-
-  const stopTimer = () => {
-    clearInterval(setSeconds(0));
-  };
 
   const holdDie = (id) => {
     setDice((prevArr) => {
@@ -71,6 +66,9 @@ function App() {
     if (tenzies) {
       setDice(allNewDice());
       setRollCount(0);
+      setMinute(0);
+      setSeconds(0);
+      setTimerOn(true);
       return;
     } else {
       setDice((prevArr) => {
@@ -83,9 +81,6 @@ function App() {
     setRollCount((prevCount) => prevCount + 1);
   };
 
-  // * Challenge: Check the dice array for these winning conditions:
-  // * 1. All dice are held, and
-  // * 2. all dice have the same value
   useEffect(() => {
     // check if all dice are held
     const allDiceHeld = dice.every((die) => die.isHeld);
@@ -93,7 +88,7 @@ function App() {
     const diceVal = dice[0].value;
     // check if all dice have the same value
     const allDiceSameVal = dice.every((die) => die.value === diceVal);
-
+    // when critera met, set tenzies to true and pause the timer and record the time
     if (allDiceHeld && allDiceSameVal) {
       setTenzies(true);
       setTimerOn(false);
@@ -108,7 +103,7 @@ function App() {
     if (timerOn) {
       // start time
       interval = setInterval(() => {
-        setTimer((prevTime) => prevTime + 1);
+        setSeconds((prevTime) => prevTime + 1);
       }, 1000);
     } else {
       // stop timer
@@ -117,12 +112,13 @@ function App() {
     return () => clearInterval(interval); // clean up
   }, [timerOn]);
 
+  /* Format to minutes and seconds for rendering */
   const formatTime = () => {
-    if (timer > 59) {
+    if (seconds > 59) {
       setMinute((prevMinute) => prevMinute + 1);
-      setTimer(0);
+      setSeconds(0);
     } else {
-      return `${minute}:${timer}s`;
+      return `${minute}:${seconds}s`;
     }
   };
 

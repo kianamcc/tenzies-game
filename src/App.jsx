@@ -6,8 +6,7 @@ import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
 
 /*Other Feature Ideas
-- CSS: Put real dots on the dice
-- Track number of rolls it took to win
+- Track number of rolls it took to win (COMPLETED)
 - Track time it took to win
 - Save best time to localStorage
 */
@@ -40,6 +39,14 @@ function App() {
   const [dice, setDice] = useState(getRandomNumbers());
   const [tenzies, setTenzies] = useState(false); // represents whether the user won the game or not
   const [rollCount, setRollCount] = useState(0);
+  const [timeRecord, setTimeRecord] = useState(0); // save time to local storage
+  const [timer, setTimer] = useState(0);
+  const [minute, setMinute] = useState(0);
+  const [timerOn, setTimerOn] = useState(true);
+
+  const stopTimer = () => {
+    clearInterval(setSeconds(0));
+  };
 
   const holdDie = (id) => {
     setDice((prevArr) => {
@@ -89,16 +96,44 @@ function App() {
 
     if (allDiceHeld && allDiceSameVal) {
       setTenzies(true);
+      setTimerOn(false);
     } else {
       setTenzies(false);
     }
   }, [dice]);
 
+  useEffect(() => {
+    let interval = 0;
+    formatTime();
+    if (timerOn) {
+      // start time
+      interval = setInterval(() => {
+        setTimer((prevTime) => prevTime + 1);
+      }, 1000);
+    } else {
+      // stop timer
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval); // clean up
+  }, [timerOn]);
+
+  const formatTime = () => {
+    if (timer > 59) {
+      setMinute((prevMinute) => prevMinute + 1);
+      setTimer(0);
+    } else {
+      return `${minute}:${timer}s`;
+    }
+  };
+
   return (
     <main className="App">
       <div className="container">
         {tenzies && <Confetti />}
-        <p className="roll-tracker">Number of rolls: {rollCount}</p>
+        <div className="header">
+          <p className="timer">Timer: {formatTime()}</p>
+          <p className="roll-tracker">Number of rolls: {rollCount}</p>
+        </div>
         <h1 className="title">Tenzies</h1>
         <p className="game-description">
           Roll until all dice are the same. Click each die to freeze it at its

@@ -5,6 +5,13 @@ import Die from "./components/Die";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
 
+/*Other Feature Ideas
+- CSS: Put real dots on the dice
+- Track number of rolls it took to win
+- Track time it took to win
+- Save best time to localStorage
+*/
+
 function App() {
   const generateDie = () => {
     return {
@@ -32,6 +39,7 @@ function App() {
 
   const [dice, setDice] = useState(getRandomNumbers());
   const [tenzies, setTenzies] = useState(false); // represents whether the user won the game or not
+  const [rollCount, setRollCount] = useState(0);
 
   const holdDie = (id) => {
     setDice((prevArr) => {
@@ -55,6 +63,8 @@ function App() {
   const handleBtnClick = () => {
     if (tenzies) {
       setDice(allNewDice());
+      setRollCount(0);
+      return;
     } else {
       setDice((prevArr) => {
         return prevArr.map((die) => {
@@ -63,6 +73,7 @@ function App() {
         });
       });
     }
+    setRollCount((prevCount) => prevCount + 1);
   };
 
   // * Challenge: Check the dice array for these winning conditions:
@@ -87,6 +98,7 @@ function App() {
     <main className="App">
       <div className="container">
         {tenzies && <Confetti />}
+        <p className="roll-tracker">Number of rolls: {rollCount}</p>
         <h1 className="title">Tenzies</h1>
         <p className="game-description">
           Roll until all dice are the same. Click each die to freeze it at its

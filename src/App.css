@@ -26,14 +26,20 @@ h1, h2, h3 {
   padding: 50px;
   display: flex;
   flex-direction: column;
-  /* gap: 25px; */
   justify-content: space-around;
   align-items: center;
+}
+
+
+.roll-tracker {
+  align-self: flex-end;
+  font-weight: 800;
 }
 
 .title {
   font-size: 2rem;
   text-align: center;
+  padding-top: 0px;
 }
 
 .game-description {
@@ -73,7 +79,7 @@ h1, h2, h3 {
   font-style: normal;
   font-weight: 700;
   font-size: 2rem;
-  line-height: 19px;
+  line-height: 30px;
   color: #FFFFFF;
   background: #5035FF;
   box-shadow: 0px 3.2px 7.68px rgba(0, 0, 0, 0.18);

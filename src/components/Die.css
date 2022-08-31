@@ -1,5 +1,5 @@
 .die-item {
-    height: 15vh;
+    height: 13vh;
     width: 7vw;
     border-radius: 5px;
     display: flex;
@@ -12,3 +12,31 @@
 .die-num {
     font-size: 2rem;
 }
+
+@media screen and (max-width: 480px) {
+    .die-item {
+        height: 9vh;
+        width: 13vw;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .die-item {
+        height: 10vh;;
+        width: 10vw;
+    }  
+}
+
+@media screen and (max-width: 768px) {
+    .die-item {
+        height: 9vh;;
+        width: 10vw;
+    }  
+}
+
+/* @media screen and (max-width: 800px) {
+    .die-item {
+        height: 5vh;;
+        width: 10vw;
+    }  
+} */

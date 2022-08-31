@@ -14,6 +14,14 @@ function App() {
     };
   };
 
+  const allNewDice = () => {
+    const newDice = [];
+    for (let i = 0; i < 10; i++) {
+      newDice.push(generateDie());
+    }
+    return newDice;
+  };
+
   const getRandomNumbers = () => {
     const randomNumArr = [];
     for (let i = 0; i < 10; i++) {
@@ -44,13 +52,17 @@ function App() {
     />
   ));
 
-  const handleRollBtnClick = () => {
-    setDice((prevArr) => {
-      return prevArr.map((die) => {
-        // if held is true leave as is
-        return die.isHeld ? die : generateDie();
+  const handleBtnClick = () => {
+    if (tenzies) {
+      setDice(allNewDice());
+    } else {
+      setDice((prevArr) => {
+        return prevArr.map((die) => {
+          // if held is true leave as is
+          return die.isHeld ? die : generateDie();
+        });
       });
-    });
+    }
   };
 
   // * Challenge: Check the dice array for these winning conditions:
@@ -66,7 +78,6 @@ function App() {
 
     if (allDiceHeld && allDiceSameVal) {
       setTenzies(true);
-      console.log("You win!");
     } else {
       setTenzies(false);
     }
@@ -75,14 +86,14 @@ function App() {
   return (
     <main className="App">
       <div className="container">
-        {tenzies ? <Confetti /> : null}
+        {tenzies && <Confetti />}
         <h1 className="title">Tenzies</h1>
         <p className="game-description">
           Roll until all dice are the same. Click each die to freeze it at its
           current value between rolls.
         </p>
         <div className="dice-container">{diceElements}</div>
-        <button className="roll-dice-btn" onClick={handleRollBtnClick}>
+        <button className="roll-dice-btn" onClick={handleBtnClick}>
           {tenzies ? "New Game" : "Roll"}
         </button>
       </div>
